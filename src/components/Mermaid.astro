@@ -1,0 +1,68 @@
+---
+/**
+ * Mermaid Component
+ *
+ * Renders Mermaid.js diagrams with a dark theme optimized for the portfolio.
+ * Usage:
+ * <Mermaid diagram="graph TD; A-->B;" />
+ */
+interface Props {
+  diagram: string;
+  caption?: string;
+}
+
+const { diagram, caption } = Astro.props;
+---
+
+<div class="my-8">
+  <div class="mermaid" data-mermaid={diagram}>
+    {diagram}
+  </div>
+  {caption && (
+    <p class="text-sm text-gray-500 text-center mt-2 font-mono">
+      {caption}
+    </p>
+  )}
+</div>
+
+<script>
+  import mermaid from 'https://cdn.jsdelivr.net/npm/mermaid@11/dist/mermaid.esm.min.mjs';
+
+  mermaid.initialize({
+    startOnLoad: true,
+    theme: 'dark',
+    themeVariables: {
+      primaryColor: '#3b82f6',
+      primaryTextColor: '#fafafa',
+      primaryBorderColor: '#222222',
+      lineColor: '#71717a',
+      secondaryColor: '#111111',
+      tertiaryColor: '#1a1a1a',
+      background: '#0a0a0a',
+      mainBkg: '#111111',
+      nodeBorder: '#222222',
+      clusterBkg: '#111111',
+      clusterBorder: '#222222',
+      titleColor: '#fafafa',
+      edgeLabelBackground: '#111111',
+      actorBkg: '#111111',
+      actorBorder: '#222222',
+      actorTextColor: '#fafafa',
+      actorLineColor: '#71717a',
+      signalColor: '#fafafa',
+      signalTextColor: '#fafafa',
+      labelBoxBkgColor: '#111111',
+      labelBoxBorderColor: '#222222',
+      labelTextColor: '#fafafa',
+      loopTextColor: '#fafafa',
+      noteBorderColor: '#222222',
+      noteBkgColor: '#111111',
+      noteTextColor: '#fafafa',
+      activationBorderColor: '#222222',
+      activationBkgColor: '#111111',
+      sequenceNumberColor: '#fafafa',
+    },
+    securityLevel: 'loose',
+    fontFamily: 'Inter, sans-serif',
+  });
+</script>

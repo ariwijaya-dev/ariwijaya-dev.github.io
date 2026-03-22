@@ -1,17 +1,126 @@
 ---
+import BaseLayout from '@/layouts/BaseLayout.astro';
+import LiveLogStreamer from '@/components/LiveLogStreamer.tsx';
+import { getCollection } from 'astro:content';
 
+const allProjects = await getCollection('projects');
+const featuredProjects = allProjects
+  .filter(p => p.data.featured)
+  .sort((a, b) => b.data.publishDate.valueOf() - a.data.publishDate.valueOf())
+  .slice(0, 6);
 ---
 
-<html lang="en">
-	<head>
-		<meta charset="utf-8" />
-		<link rel="icon" type="image/svg+xml" href="/favicon.svg" />
-		<link rel="icon" href="/favicon.ico" />
-		<meta name="viewport" content="width=device-width" />
-		<meta name="generator" content={Astro.generator} />
-		<title>Astro</title>
-	</head>
-	<body>
-		<h1>Astro</h1>
-	</body>
-</html>
+<BaseLayout>
+  <!-- Hero Section -->
+  <section class="relative overflow-hidden">
+    <div class="absolute inset-0 bg-gradient-to-br from-blue-500/5 via-transparent to-purple-500/5" />
+
+    <div class="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-24 lg:py-32">
+      <div class="text-center">
+        <p class="font-mono text-sm text-blue-400 mb-4">// I Made Pande Ari Wijaya</p>
+        <h1 class="text-4xl sm:text-5xl lg:text-6xl font-bold mb-6 tracking-tight">
+          <span class="gradient-text">Software Engineer</span>
+          <br />
+          <span class="text-gray-100">& Fullstack Developer</span>
+        </h1>
+        <p class="text-lg sm:text-xl text-gray-400 max-w-3xl mx-auto mb-12">
+          Results-driven Software Engineer based in Jakarta, Indonesia. Specializing in scalable backend systems,
+          Service-Oriented Architecture, AI-driven solutions, and intuitive user interfaces using Go, Python, React, and Laravel.
+        </p>
+
+        <div class="flex flex-wrap justify-center gap-3 mb-16">
+          <span class="px-4 py-2 font-mono text-sm bg-[#111111] border border-[#222222] rounded-lg text-gray-300">
+            [Go]
+          </span>
+          <span class="px-4 py-2 font-mono text-sm bg-[#111111] border border-[#222222] rounded-lg text-gray-300">
+            [Python]
+          </span>
+          <span class="px-4 py-2 font-mono text-sm bg-[#111111] border border-[#222222] rounded-lg text-gray-300">
+            [React]
+          </span>
+          <span class="px-4 py-2 font-mono text-sm bg-[#111111] border border-[#222222] rounded-lg text-gray-300">
+            [Laravel]
+          </span>
+          <span class="px-4 py-2 font-mono text-sm bg-[#111111] border border-[#222222] rounded-lg text-gray-300">
+            [SOA]
+          </span>
+          <span class="px-4 py-2 font-mono text-sm bg-[#111111] border border-[#222222] rounded-lg text-gray-300">
+            [AI/ML]
+          </span>
+        </div>
+
+        <!-- Live Log Streamer Component -->
+        <LiveLogStreamer client:load />
+      </div>
+    </div>
+  </section>
+
+  <!-- Projects Section -->
+  <section id="projects" class="py-24 bg-[#0a0a0a]">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div class="text-center mb-16">
+        <h2 class="text-3xl sm:text-4xl font-bold mb-4">
+          <span class="text-gray-100">Featured Projects</span>
+        </h2>
+        <p class="text-gray-400 max-w-2xl mx-auto">
+          Deep dives into system design, architecture decisions, and implementation details
+        </p>
+      </div>
+
+      {featuredProjects.length > 0 ? (
+        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+          {featuredProjects.map((project) => (
+            <a
+              href={`/projects/${project.id}`}
+              class="group relative bg-[#111111] border border-[#222222] rounded-lg overflow-hidden hover:border-[#333333] transition-all duration-200"
+            >
+              <div class="aspect-video bg-gradient-to-br from-[#1a1a1a] to-[#111111] flex items-center justify-center">
+                <div class="text-6xl text-gray-700 group-hover:text-gray-600 transition-colors">
+                  ⚡
+                </div>
+              </div>
+
+              <div class="p-6">
+                <h3 class="text-xl font-semibold text-gray-100 mb-2 group-hover:text-blue-400 transition-colors">
+                  {project.data.title}
+                </h3>
+                <p class="text-gray-400 text-sm mb-4 line-clamp-2">
+                  {project.data.description}
+                </p>
+
+                <div class="flex flex-wrap gap-2">
+                  {project.data.tags.slice(0, 4).map((tag) => (
+                    <span class="px-2.5 py-1 font-mono text-xs bg-[#0a0a0a] border border-[#222222] rounded text-gray-400">
+                      {tag}
+                    </span>
+                  ))}
+                </div>
+              </div>
+            </a>
+          ))}
+        </div>
+      ) : (
+        <div class="text-center py-12">
+          <p class="text-gray-500 mb-4">No projects yet. Check back soon!</p>
+          <p class="font-mono text-sm text-gray-600">
+            // Add projects in src/content/projects/
+          </p>
+        </div>
+      )}
+
+      <div class="mt-12 text-center">
+        <a
+          href="https://github.com/yourusername"
+          target="_blank"
+          rel="noopener noreferrer"
+          class="inline-flex items-center gap-2 px-6 py-3 font-mono text-sm bg-[#111111] border border-[#222222] rounded-lg text-gray-300 hover:bg-[#1a1a1a] hover:border-[#333333] transition-colors"
+        >
+          <span>View All on GitHub</span>
+          <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14 5l7 7m0 0l-7 7m7-7H3" />
+          </svg>
+        </a>
+      </div>
+    </div>
+  </section>
+</BaseLayout>

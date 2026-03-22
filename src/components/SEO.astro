@@ -1,0 +1,77 @@
+---
+interface Props {
+  title?: string;
+  description?: string;
+  image?: string;
+  canonicalURL?: string;
+  type?: 'website' | 'article';
+}
+
+const {
+  title = 'I Made Pande Ari Wijaya | Software Engineer & Fullstack Developer',
+  description = 'Software Engineer based in Jakarta, Indonesia. Specializing in scalable backend systems, Service-Oriented Architecture, AI-driven solutions, and fullstack development with Go, Python, React, and Laravel.',
+  image = '/og-image.png',
+  canonicalURL = new URL(Astro.url.pathname, Astro.site).href,
+  type = 'website',
+} = Astro.props;
+
+const fullTitle = title.includes('|') ? title : `${title} | Portfolio`;
+---
+
+<!-- Meta Tags -->
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+<meta name="generator" content={Astro.generator} />
+
+<!-- SEO Meta Tags -->
+<title>{fullTitle}</title>
+<meta name="description" content={description} />
+<link rel="canonical" href={canonicalURL} />
+
+<!-- OpenGraph / Facebook -->
+<meta property="og:type" content={type} />
+<meta property="og:title" content={fullTitle} />
+<meta property="og:description" content={description} />
+<meta property="og:image" content={new URL(image, Astro.url)} />
+<meta property="og:url" content={canonicalURL} />
+
+<!-- Twitter -->
+<meta name="twitter:card" content="summary_large_image" />
+<meta name="twitter:title" content={fullTitle} />
+<meta name="twitter:description" content={description} />
+<meta name="twitter:image" content={new URL(image, Astro.url)} />
+
+<!-- JSON-LD Structured Data for Software Engineer -->
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "Person",
+  "name": "I Made Pande Ari Wijaya",
+  "jobTitle": "Software Engineer",
+  "description": "Results-driven Software Engineer based in Jakarta, Indonesia. Specializing in scalable backend systems, Service-Oriented Architecture, AI-driven solutions, and fullstack development.",
+  "email": "ari.wijaya.dev@gmail.com",
+  "address": {
+    "@type": "PostalAddress",
+    "addressLocality": "Jakarta",
+    "addressCountry": "Indonesia"
+  },
+  "url": "https://yourportfolio.com",
+  "sameAs": [
+    "https://linkedin.com/in/ariwijaya82"
+  ],
+  "knowsAbout": [
+    "Go", "Python", "React", "Laravel", "Vue.js",
+    "Service-Oriented Architecture", "Microservices", "REST APIs",
+    "TypeScript", "PHP", "AI/ML", "Frontend Development",
+    "Backend Development", "Fullstack Development"
+  ],
+  "worksFor": [
+    {
+      "@type": "Organization",
+      "name": "Peepl",
+      "startDate": "2024-05"
+    }
+  ]
+}
+</script>

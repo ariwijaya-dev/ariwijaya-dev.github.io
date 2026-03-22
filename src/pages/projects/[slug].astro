@@ -1,0 +1,118 @@
+---
+import BaseLayout from '@/layouts/BaseLayout.astro';
+import { getCollection, render } from 'astro:content';
+import Mermaid from '@/components/Mermaid.astro';
+
+export async function getStaticPaths() {
+  const projects = await getCollection('projects');
+  return projects.map((entry) => ({
+    params: { slug: entry.id },
+    props: { entry },
+  }));
+}
+
+const { entry } = Astro.props;
+const { Content } = await render(entry);
+
+const formattedDate = new Date(entry.data.publishDate).toLocaleDateString('en-US', {
+  year: 'numeric',
+  month: 'long',
+  day: 'numeric',
+});
+---
+
+<BaseLayout
+  title={`${entry.data.title} | Case Study`}
+  description={entry.data.description}
+  type="article"
+>
+  <article class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-16">
+    <!-- Back Link -->
+    <a
+      href="/#projects"
+      class="inline-flex items-center gap-2 text-gray-400 hover:text-white transition-colors mb-8 font-mono text-sm"
+    >
+      <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7" />
+      </svg>
+      <span>Back to Projects</span>
+    </a>
+
+    <!-- Header -->
+    <header class="mb-12">
+      <p class="font-mono text-sm text-blue-400 mb-4">// Case Study</p>
+      <h1 class="text-4xl sm:text-5xl font-bold mb-4 text-gray-100">
+        {entry.data.title}
+      </h1>
+      <p class="text-xl text-gray-400 mb-6">
+        {entry.data.description}
+      </p>
+
+      <div class="flex flex-wrap items-center gap-4 text-sm text-gray-500 mb-6">
+        <span class="font-mono">{formattedDate}</span>
+        <span>•</span>
+        <div class="flex flex-wrap gap-2">
+          {entry.data.tags.map((tag) => (
+            <span class="px-2.5 py-1 font-mono text-xs bg-[#111111] border border-[#222222] rounded text-gray-400">
+              {tag}
+            </span>
+          ))}
+        </div>
+      </div>
+    </header>
+
+    <!-- Performance Metrics -->
+    {entry.data.metrics && (
+      <div class="mb-12 p-6 bg-[#111111] border border-[#222222] rounded-lg">
+        <h2 class="text-lg font-semibold text-gray-100 mb-4 font-mono">
+          // Performance Metrics
+        </h2>
+        <div class="grid grid-cols-2 sm:grid-cols-4 gap-4">
+          {entry.data.metrics.latency && (
+            <div>
+              <p class="text-xs text-gray-500 mb-1">Latency</p>
+              <p class="text-2xl font-bold text-blue-400">{entry.data.metrics.latency}</p>
+            </div>
+          )}
+          {entry.data.metrics.throughput && (
+            <div>
+              <p class="text-xs text-gray-500 mb-1">Throughput</p>
+              <p class="text-2xl font-bold text-green-400">{entry.data.metrics.throughput}</p>
+            </div>
+          )}
+          {entry.data.metrics.availability && (
+            <div>
+              <p class="text-xs text-gray-500 mb-1">Availability</p>
+              <p class="text-2xl font-bold text-purple-400">{entry.data.metrics.availability}</p>
+            </div>
+          )}
+          {entry.data.metrics.scale && (
+            <div>
+              <p class="text-xs text-gray-500 mb-1">Scale</p>
+              <p class="text-2xl font-bold text-yellow-400">{entry.data.metrics.scale}</p>
+            </div>
+          )}
+        </div>
+      </div>
+    )}
+
+    <!-- Content -->
+    <div class="prose prose-invert max-w-none">
+      <Content />
+    </div>
+
+    <!-- Footer -->
+    <footer class="mt-16 pt-8 border-t border-[#222222]">
+      <p class="font-mono text-sm text-gray-500">
+        Found this case study interesting? Let's connect on{' '}
+        <a href="https://github.com/yourusername" class="text-blue-400 hover:text-blue-300">
+          GitHub
+        </a>
+        {' '}or{' '}
+        <a href="https://linkedin.com/in/yourusername" class="text-blue-400 hover:text-blue-300">
+          LinkedIn
+        </a>
+      </p>
+    </footer>
+  </article>
+</BaseLayout>
