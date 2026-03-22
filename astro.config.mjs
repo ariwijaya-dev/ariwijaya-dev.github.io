@@ -6,7 +6,7 @@ import react from '@astrojs/react';
 // https://astro.build/config
 export default defineConfig({
   site: 'https://ariwijaya-dev.github.io',
-  base: '/personal-website',
+  base: '/',
   vite: {
     plugins: [tailwindcss()],
     resolve: {
