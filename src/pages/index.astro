@@ -1,13 +1,50 @@
 ---
 import BaseLayout from '@/layouts/BaseLayout.astro';
 import LiveLogStreamer from '@/components/LiveLogStreamer.tsx';
-import { getCollection } from 'astro:content';
 
-const allProjects = await getCollection('projects');
-const featuredProjects = allProjects
-  .filter(p => p.data.featured)
-  .sort((a, b) => b.data.publishDate.valueOf() - a.data.publishDate.valueOf())
-  .slice(0, 6);
+const featuredProjects = [
+  {
+    id: 'humanoid-soccer-pathfinding',
+    title: 'Humanoid Soccer Pathfinding',
+    description: 'Path planning and navigation system for humanoid robot soccer using A* algorithm and Bezier curves in Webots simulation environment',
+    tags: ['C++', 'Webots', 'Qt6', 'A*', 'Bezier Curves'],
+    category: 'robotics',
+    githubUrl: 'https://github.com/ariwijaya-dev/humanoid-soccer-pathfinding',
+    initials: 'HSP',
+    gradient: 'from-blue-500 via-purple-500 to-pink-500',
+    highlights: [
+      'A* pathfinding with 4 heuristic functions',
+      'Bezier curve smoothing for natural motion',
+      'Real-time obstacle avoidance system',
+      'Qt6-based monitoring GUI',
+      'WebSocket communication'
+    ]
+  },
+  {
+    id: 'optimus-finance',
+    title: 'Optimus Finance',
+    description: 'Real-time stock alert system demonstrating polyglot microservices architecture with Go, Python, and Laravel',
+    tags: ['Go', 'Python', 'Laravel', 'Docker', 'Redis', 'WebSocket'],
+    category: 'webdev',
+    githubUrl: 'https://github.com/ariwijaya-dev/optimus-finance',
+    initials: 'OF',
+    gradient: 'from-green-400 via-cyan-500 to-blue-500',
+    highlights: [
+      'Polyglot microservices (Go, Python, Laravel)',
+      'Real-time WebSocket streaming',
+      'AI-powered sentiment analysis',
+      'Redis pub/sub communication',
+      'Prometheus + Grafana monitoring'
+    ]
+  }
+];
+
+const categories = [
+  { id: 'all', label: 'All Projects', icon: '📁' },
+  { id: 'robotics', label: 'Robotics & AI', icon: '🤖' },
+  { id: 'webdev', label: 'Web Development', icon: '💻' },
+  { id: 'devops', label: 'DevOps', icon: '⚙️' },
+];
 ---
 
 <BaseLayout>
@@ -45,6 +82,16 @@ const featuredProjects = allProjects
           >
             View My Work
           </a>
+          <a
+            href="/resume.pdf"
+            download
+            class="inline-flex items-center gap-2 px-8 py-3 font-mono text-sm bg-[#111111] border border-[#222222] hover:bg-[#1a1a1a] hover:border-[#333333] text-gray-300 rounded-lg transition-colors"
+          >
+            <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 10v6m0 0l-3-3m3 3l3-3m2 8H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" />
+            </svg>
+            Download Resume
+          </a>
         </div>
 
         <!-- Tech Stack Badges -->
@@ -59,10 +106,19 @@ const featuredProjects = allProjects
             [React]
           </span>
           <span class="px-4 py-2 font-mono text-sm bg-[#111111] border border-[#222222] rounded-lg text-gray-300">
-            [Laravel]
+            [TypeScript]
+          </span>
+          <span class="px-4 py-2 font-mono text-sm bg-[#111111] border border-[#222222] rounded-lg text-gray-300">
+            [Docker]
+          </span>
+          <span class="px-4 py-2 font-mono text-sm bg-[#111111] border border-[#222222] rounded-lg text-gray-300">
+            [Kubernetes]
           </span>
           <span class="px-4 py-2 font-mono text-sm bg-[#111111] border border-[#222222] rounded-lg text-gray-300">
             [AI/ML]
+          </span>
+          <span class="px-4 py-2 font-mono text-sm bg-[#111111] border border-[#222222] rounded-lg text-gray-300">
+            [PostgreSQL]
           </span>
         </div>
       </div>
@@ -139,7 +195,7 @@ const featuredProjects = allProjects
         </h2>
       </div>
 
-      <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+      <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-6 gap-6">
         <!-- Backend -->
         <div class="bg-[#111111] border border-[#222222] rounded-lg p-6 hover:border-[#333333] transition-colors">
           <div class="flex items-center gap-3 mb-4">
@@ -153,8 +209,10 @@ const featuredProjects = allProjects
           <div class="flex flex-wrap gap-2">
             <span class="px-3 py-1 font-mono text-xs bg-[#0a0a0a] border border-[#222222] rounded text-gray-300">Go</span>
             <span class="px-3 py-1 font-mono text-xs bg-[#0a0a0a] border border-[#222222] rounded text-gray-300">Python</span>
-            <span class="px-3 py-1 font-mono text-xs bg-[#0a0a0a] border border-[#222222] rounded text-gray-300">Laravel</span>
             <span class="px-3 py-1 font-mono text-xs bg-[#0a0a0a] border border-[#222222] rounded text-gray-300">PHP</span>
+            <span class="px-3 py-1 font-mono text-xs bg-[#0a0a0a] border border-[#222222] rounded text-gray-300">Gin</span>
+            <span class="px-3 py-1 font-mono text-xs bg-[#0a0a0a] border border-[#222222] rounded text-gray-300">Django</span>
+            <span class="px-3 py-1 font-mono text-xs bg-[#0a0a0a] border border-[#222222] rounded text-gray-300">Laravel</span>
           </div>
         </div>
 
@@ -169,27 +227,10 @@ const featuredProjects = allProjects
             <h3 class="font-semibold text-gray-100">Frontend</h3>
           </div>
           <div class="flex flex-wrap gap-2">
-            <span class="px-3 py-1 font-mono text-xs bg-[#0a0a0a] border border-[#222222] rounded text-gray-300">React</span>
-            <span class="px-3 py-1 font-mono text-xs bg-[#0a0a0a] border border-[#222222] rounded text-gray-300">Vue.js</span>
+            <span class="px-3 py-1 font-mono text-xs bg-[#0a0a0a] border border-[#222222] rounded text-gray-300">React.js</span>
+            <span class="px-3 py-1 font-mono text-xs bg-[#0a0a0a] border border-[#222222] rounded text-gray-300">Next.js</span>
             <span class="px-3 py-1 font-mono text-xs bg-[#0a0a0a] border border-[#222222] rounded text-gray-300">TypeScript</span>
             <span class="px-3 py-1 font-mono text-xs bg-[#0a0a0a] border border-[#222222] rounded text-gray-300">Tailwind</span>
-          </div>
-        </div>
-
-        <!-- Architecture -->
-        <div class="bg-[#111111] border border-[#222222] rounded-lg p-6 hover:border-[#333333] transition-colors">
-          <div class="flex items-center gap-3 mb-4">
-            <div class="w-10 h-10 bg-purple-500/20 rounded-lg flex items-center justify-center">
-              <svg class="w-5 h-5 text-purple-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 11H5m14 0a2 2 0 012 2v6a2 2 0 01-2 2H5a2 2 0 01-2-2v-6a2 2 0 012-2m14 0V9a2 2 0 00-2-2M5 11V9a2 2 0 012-2m0 0V5a2 2 0 012-2h6a2 2 0 012 2v2M7 7h10" />
-              </svg>
-            </div>
-            <h3 class="font-semibold text-gray-100">Architecture</h3>
-          </div>
-          <div class="flex flex-wrap gap-2">
-            <span class="px-3 py-1 font-mono text-xs bg-[#0a0a0a] border border-[#222222] rounded text-gray-300">SOA</span>
-            <span class="px-3 py-1 font-mono text-xs bg-[#0a0a0a] border border-[#222222] rounded text-gray-300">Microservices</span>
-            <span class="px-3 py-1 font-mono text-xs bg-[#0a0a0a] border border-[#222222] rounded text-gray-300">REST APIs</span>
           </div>
         </div>
 
@@ -205,8 +246,62 @@ const featuredProjects = allProjects
           </div>
           <div class="flex flex-wrap gap-2">
             <span class="px-3 py-1 font-mono text-xs bg-[#0a0a0a] border border-[#222222] rounded text-gray-300">LLMs</span>
-            <span class="px-3 py-1 font-mono text-xs bg-[#0a0a0a] border border-[#222222] rounded text-gray-300">NLP</span>
             <span class="px-3 py-1 font-mono text-xs bg-[#0a0a0a] border border-[#222222] rounded text-gray-300">LangChain</span>
+            <span class="px-3 py-1 font-mono text-xs bg-[#0a0a0a] border border-[#222222] rounded text-gray-300">Mastra</span>
+            <span class="px-3 py-1 font-mono text-xs bg-[#0a0a0a] border border-[#222222] rounded text-gray-300">AI Agent</span>
+          </div>
+        </div>
+
+        <!-- Databases -->
+        <div class="bg-[#111111] border border-[#222222] rounded-lg p-6 hover:border-[#333333] transition-colors">
+          <div class="flex items-center gap-3 mb-4">
+            <div class="w-10 h-10 bg-cyan-500/20 rounded-lg flex items-center justify-center">
+              <svg class="w-5 h-5 text-cyan-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 7v10c0 2.21 3.582 4 8 4s8-1.79 8-4V7M4 7c0 2.21 3.582 4 8 4s8-1.79 8-4M4 7c0-2.21 3.582-4 8-4s8 1.79 8 4m0 5c0 2.21-3.582 4-8 4s-8-1.79-8-4" />
+              </svg>
+            </div>
+            <h3 class="font-semibold text-gray-100">Databases</h3>
+          </div>
+          <div class="flex flex-wrap gap-2">
+            <span class="px-3 py-1 font-mono text-xs bg-[#0a0a0a] border border-[#222222] rounded text-gray-300">PostgreSQL</span>
+            <span class="px-3 py-1 font-mono text-xs bg-[#0a0a0a] border border-[#222222] rounded text-gray-300">MySQL</span>
+            <span class="px-3 py-1 font-mono text-xs bg-[#0a0a0a] border border-[#222222] rounded text-gray-300">MongoDB</span>
+            <span class="px-3 py-1 font-mono text-xs bg-[#0a0a0a] border border-[#222222] rounded text-gray-300">Redis</span>
+          </div>
+        </div>
+
+        <!-- DevOps -->
+        <div class="bg-[#111111] border border-[#222222] rounded-lg p-6 hover:border-[#333333] transition-colors">
+          <div class="flex items-center gap-3 mb-4">
+            <div class="w-10 h-10 bg-orange-500/20 rounded-lg flex items-center justify-center">
+              <svg class="w-5 h-5 text-orange-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 11H5m14 0a2 2 0 012 2v6a2 2 0 01-2 2H5a2 2 0 01-2-2v-6a2 2 0 012-2m14 0V9a2 2 0 00-2-2M5 11V9a2 2 0 012-2m0 0V5a2 2 0 012-2h6a2 2 0 012 2v2M7 7h10" />
+              </svg>
+            </div>
+            <h3 class="font-semibold text-gray-100">DevOps</h3>
+          </div>
+          <div class="flex flex-wrap gap-2">
+            <span class="px-3 py-1 font-mono text-xs bg-[#0a0a0a] border border-[#222222] rounded text-gray-300">Docker</span>
+            <span class="px-3 py-1 font-mono text-xs bg-[#0a0a0a] border border-[#222222] rounded text-gray-300">Kubernetes</span>
+            <span class="px-3 py-1 font-mono text-xs bg-[#0a0a0a] border border-[#222222] rounded text-gray-300">CI/CD</span>
+            <span class="px-3 py-1 font-mono text-xs bg-[#0a0a0a] border border-[#222222] rounded text-gray-300">Git</span>
+          </div>
+        </div>
+
+        <!-- Cloud -->
+        <div class="bg-[#111111] border border-[#222222] rounded-lg p-6 hover:border-[#333333] transition-colors">
+          <div class="flex items-center gap-3 mb-4">
+            <div class="w-10 h-10 bg-pink-500/20 rounded-lg flex items-center justify-center">
+              <svg class="w-5 h-5 text-pink-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 15a4 4 0 004 4h9a5 5 0 10-.1-9.999 5.002 5.002 0 10-9.78 2.096A4.001 4.001 0 003 15z" />
+              </svg>
+            </div>
+            <h3 class="font-semibold text-gray-100">Cloud</h3>
+          </div>
+          <div class="flex flex-wrap gap-2">
+            <span class="px-3 py-1 font-mono text-xs bg-[#0a0a0a] border border-[#222222] rounded text-gray-300">GCP</span>
+            <span class="px-3 py-1 font-mono text-xs bg-[#0a0a0a] border border-[#222222] rounded text-gray-300">AWS</span>
+            <span class="px-3 py-1 font-mono text-xs bg-[#0a0a0a] border border-[#222222] rounded text-gray-300">Linux</span>
           </div>
         </div>
       </div>
@@ -239,19 +334,23 @@ const featuredProjects = allProjects
           <ul class="space-y-2 text-gray-300 text-sm">
             <li class="flex gap-2">
               <span class="text-blue-400 mt-1">▹</span>
-              <span>Led migration from monolithic Laravel to SOA (Go, Python, React)</span>
+              <span>Led migration from monolithic Laravel to SOA using Go, Python, and React</span>
             </li>
             <li class="flex gap-2">
               <span class="text-blue-400 mt-1">▹</span>
-              <span>Built AI-driven candidate summarization engine reducing review time by 72%</span>
+              <span>Architected microservices with Docker and Kubernetes on GCP infrastructure</span>
             </li>
             <li class="flex gap-2">
               <span class="text-blue-400 mt-1">▹</span>
-              <span>Developed AI scoring system achieving 97% evaluation consistency</span>
+              <span>Built AI-driven candidate summarization engine using LangChain and OpenAI API, reducing review time by 72%</span>
             </li>
             <li class="flex gap-2">
               <span class="text-blue-400 mt-1">▹</span>
-              <span>Scaled platform to handle 10,000+ concurrent users</span>
+              <span>Developed AI scoring system achieving 97% evaluation consistency with PostgreSQL and Redis</span>
+            </li>
+            <li class="flex gap-2">
+              <span class="text-blue-400 mt-1">▹</span>
+              <span>Scaled platform to handle 10,000+ concurrent users through optimization and caching strategies</span>
             </li>
           </ul>
         </div>
@@ -271,46 +370,55 @@ const featuredProjects = allProjects
           <ul class="space-y-2 text-gray-300 text-sm">
             <li class="flex gap-2">
               <span class="text-blue-400 mt-1">▹</span>
-              <span>Contributed to CMS project for AI dataset management</span>
+              <span>Contributed to CMS project for AI dataset management using React.js and Python</span>
             </li>
             <li class="flex gap-2">
               <span class="text-blue-400 mt-1">▹</span>
-              <span>Built responsive UI components using React.js</span>
+              <span>Built responsive and accessible UI components using React.js and TypeScript</span>
             </li>
             <li class="flex gap-2">
               <span class="text-blue-400 mt-1">▹</span>
-              <span>Integrated frontend components with backend APIs</span>
+              <span>Integrated frontend components with backend RESTful APIs following Agile/Scrum methodologies</span>
+            </li>
+            <li class="flex gap-2">
+              <span class="text-blue-400 mt-1">▹</span>
+              <span>Collaborated with cross-functional teams to deliver features in CI/CD pipeline environment</span>
             </li>
           </ul>
         </div>
 
-        <!-- PT. Sinko Prima Alloy -->
+        <!-- ICHIRO - Humanoid Robotic Team ITS -->
         <div class="bg-[#111111] border border-[#222222] rounded-lg p-6 hover:border-[#333333] transition-colors">
           <div class="flex flex-col sm:flex-row sm:items-center sm:justify-between mb-4">
             <div>
-              <h3 class="text-xl font-semibold text-gray-100">Software Developer</h3>
-              <p class="text-blue-400 font-mono text-sm">PT. Sinko Prima Alloy</p>
+              <h3 class="text-xl font-semibold text-gray-100">Software Programmer</h3>
+              <p class="text-blue-400 font-mono text-sm">Humanoid Robotic Team ITS (ICHIRO)</p>
             </div>
             <div class="mt-2 sm:mt-0 font-mono text-sm text-gray-400">
-              January 2021 – December 2021
+              January 2018 – December 2020
             </div>
           </div>
           <p class="text-gray-400 text-sm mb-3">Surabaya, Indonesia</p>
           <ul class="space-y-2 text-gray-300 text-sm">
             <li class="flex gap-2">
               <span class="text-blue-400 mt-1">▹</span>
-              <span>Developed ERP web-based software improving operational efficiency by 95%</span>
+              <span>Engineered sophisticated algorithms and programmed humanoid robots to walk and play soccer in competitive team environments</span>
             </li>
             <li class="flex gap-2">
               <span class="text-blue-400 mt-1">▹</span>
-              <span>Implemented business logic using Laravel and Vue.js</span>
+              <span>Developed advanced computer vision systems to detect the ball and field using color classification and pattern recognition techniques</span>
             </li>
             <li class="flex gap-2">
               <span class="text-blue-400 mt-1">▹</span>
-              <span>Collaborated with stakeholders to implement enhancements</span>
+              <span>Coded in simulated environments to thoroughly test algorithms before real-world implementation</span>
+            </li>
+            <li class="flex gap-2">
+              <span class="text-blue-400 mt-1">▹</span>
+              <span>Collaborated with teammates to optimize robot performance, strategy, and coordination during competitions</span>
             </li>
           </ul>
         </div>
+
       </div>
     </div>
   </section>
@@ -324,50 +432,89 @@ const featuredProjects = allProjects
           Things I've Built
         </h2>
         <p class="text-gray-400 max-w-2xl mx-auto">
-          Deep dives into system design, architecture decisions, and implementation details
+          A showcase of my work in robotics, web development, and distributed systems
         </p>
       </div>
 
-      {featuredProjects.length > 0 ? (
-        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-          {featuredProjects.map((project) => (
-            <a
-              href={`/projects/${project.id}`}
-              class="group relative bg-[#111111] border border-[#222222] rounded-lg overflow-hidden hover:border-[#333333] transition-all duration-200"
-            >
-              <div class="aspect-video bg-gradient-to-br from-[#1a1a1a] to-[#111111] flex items-center justify-center">
-                <div class="text-6xl text-gray-700 group-hover:text-gray-600 transition-colors">
-                  ⚡
+      <!-- Filter Buttons -->
+      <div class="flex flex-wrap justify-center gap-3 mb-12" id="project-filters">
+        {categories.map((category) => (
+          <button
+            data-category={category.id}
+            class={`filter-btn group relative px-5 py-2.5 font-mono text-sm bg-[#111111] border border-[#222222] rounded-lg transition-all duration-200 ${
+              category.id === 'all' ? 'border-blue-500 text-blue-400' : 'text-gray-400 hover:border-[#333333] hover:text-gray-300'
+            }`}
+          >
+            <span class="flex items-center gap-2">
+              <span>{category.icon}</span>
+              <span>{category.label}</span>
+            </span>
+          </button>
+        ))}
+      </div>
+
+      <!-- Projects Grid -->
+      <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6" id="projects-grid">
+        {featuredProjects.map((project) => (
+          <a
+            href={project.githubUrl}
+            target="_blank"
+            rel="noopener noreferrer"
+            data-category={project.category}
+            class="project-card group relative bg-[#111111] border border-[#222222] rounded-lg overflow-hidden hover:border-[#333333] transition-all duration-200"
+          >
+            <div class="aspect-video bg-gradient-to-br from-[#1a1a1a] to-[#111111] flex items-center justify-center relative p-8">
+              <div class={`absolute inset-0 bg-gradient-to-br ${project.gradient} opacity-0 group-hover:opacity-10 transition-opacity duration-300`}></div>
+              <div class={`relative z-10 w-24 h-24 rounded-2xl bg-gradient-to-br ${project.gradient} p-[2px] transform group-hover:scale-110 group-hover:rotate-3 transition-all duration-300 shadow-2xl`}>
+                <div class="w-full h-full rounded-2xl bg-[#111111] flex items-center justify-center">
+                  <span class="text-2xl font-bold text-transparent bg-clip-text bg-gradient-to-br from-white to-gray-400">
+                    {project.initials}
+                  </span>
                 </div>
               </div>
+              <div class="absolute top-3 right-3 z-20">
+                <svg class="w-5 h-5 text-gray-600 group-hover:text-blue-400 transition-colors" fill="currentColor" viewBox="0 0 24 24">
+                  <path d="M12 0c-6.626 0-12 5.373-12 12 0 5.302 3.438 9.8 8.207 11.387.599.111.793-.261.793-.577v-2.234c-3.338.726-4.033-1.416-4.033-1.416-.546-1.387-1.333-1.756-1.333-1.756-1.089-.745.083-.729.083-.729 1.205.084 1.839 1.237 1.839 1.237 1.07 1.834 2.807 1.304 3.492.997.107-.775.418-1.305.762-1.604-2.665-.305-5.467-1.334-5.467-5.931 0-1.311.469-2.381 1.236-3.221-.124-.303-.535-1.524.117-3.176 0 0 1.008-.322 3.301 1.23.957-.266 1.983-.399 3.003-.404 1.02.005 2.047.138 3.006.404 2.291-1.552 3.297-1.23 3.297-1.23.653 1.653.242 2.874.118 3.176.77.84 1.235 1.911 1.235 3.221 0 4.609-2.807 5.624-5.479 5.921.43.372.823 1.102.823 2.222v3.293c0 .319.192.694.801.576 4.765-1.589 8.199-6.086 8.199-11.386 0-6.627-5.373-12-12-12z"/>
+                </svg>
+              </div>
+            </div>
 
-              <div class="p-6">
-                <h3 class="text-xl font-semibold text-gray-100 mb-2 group-hover:text-blue-400 transition-colors">
-                  {project.data.title}
+            <div class="p-5">
+              <div class="flex items-start justify-between mb-2">
+                <h3 class="text-lg font-semibold text-gray-100 group-hover:text-blue-400 transition-colors">
+                  {project.title}
                 </h3>
-                <p class="text-gray-400 text-sm mb-4 line-clamp-2">
-                  {project.data.description}
-                </p>
-
-                <div class="flex flex-wrap gap-2">
-                  {project.data.tags.slice(0, 4).map((tag) => (
-                    <span class="px-2.5 py-1 font-mono text-xs bg-[#0a0a0a] border border-[#222222] rounded text-gray-400">
-                      {tag}
-                    </span>
-                  ))}
-                </div>
+                <svg class="w-4 h-4 text-gray-600 group-hover:text-blue-400 transition-colors flex-shrink-0 ml-2 mt-0.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14" />
+                </svg>
               </div>
-            </a>
-          ))}
-        </div>
-      ) : (
-        <div class="text-center py-12">
-          <p class="text-gray-500 mb-4">No projects yet. Check back soon!</p>
-          <p class="font-mono text-sm text-gray-600">
-            // Add projects in src/content/projects/
-          </p>
-        </div>
-      )}
+              <p class="text-gray-400 text-sm mb-4 line-clamp-2 leading-relaxed">
+                {project.description}
+              </p>
+
+              <div class="flex flex-wrap gap-1.5 mb-4">
+                {project.tags.slice(0, 5).map((tag) => (
+                  <span class="px-2 py-1 font-mono text-xs bg-[#0a0a0a] border border-[#222222] rounded text-gray-400">
+                    {tag}
+                  </span>
+                ))}
+              </div>
+
+              <div class="border-t border-[#222222] pt-3">
+                <p class="font-mono text-xs text-gray-500 mb-2">// Key Features</p>
+                <ul class="space-y-1">
+                  {project.highlights.slice(0, 3).map((highlight) => (
+                    <li class="flex items-start gap-2 text-xs text-gray-400">
+                      <span class="text-blue-400 flex-shrink-0">▹</span>
+                      <span class="line-clamp-1">{highlight}</span>
+                    </li>
+                  ))}
+                </ul>
+              </div>
+            </div>
+          </a>
+        ))}
+      </div>
 
       <div class="mt-12 text-center">
         <a
@@ -384,6 +531,47 @@ const featuredProjects = allProjects
       </div>
     </div>
   </section>
+
+  <!-- Project Filtering Script -->
+  <script>
+    const filterButtons = document.querySelectorAll('.filter-btn');
+    const projectCards = document.querySelectorAll('.project-card');
+
+    filterButtons.forEach(button => {
+      button.addEventListener('click', () => {
+        const category = button.dataset.category;
+
+        // Update active state
+        filterButtons.forEach(btn => {
+          btn.classList.remove('border-blue-500', 'text-blue-400');
+          btn.classList.add('text-gray-400');
+        });
+        button.classList.add('border-blue-500', 'text-blue-400');
+        button.classList.remove('text-gray-400');
+
+        // Filter cards with animation
+        projectCards.forEach(card => {
+          if (category === 'all' || card.dataset.category === category) {
+            card.style.display = '';
+            card.style.opacity = '0';
+            card.style.transform = 'translateY(10px)';
+            setTimeout(() => {
+              card.style.transition = 'all 0.3s ease';
+              card.style.opacity = '1';
+              card.style.transform = 'translateY(0)';
+            }, 50);
+          } else {
+            card.style.transition = 'all 0.3s ease';
+            card.style.opacity = '0';
+            card.style.transform = 'translateY(10px)';
+            setTimeout(() => {
+              card.style.display = 'none';
+            }, 300);
+          }
+        });
+      });
+    });
+  </script>
 
   <!-- Contact Section -->
   <section id="contact" class="py-20 bg-[#0a0a0a]">
