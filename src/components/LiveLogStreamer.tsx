@@ -190,12 +190,6 @@ export default function LiveLogStreamer() {
           </div>
         </div>
       </div>
-
-      {/* Description */}
-      <p className="mt-4 text-sm text-gray-400 text-center">
-        Real-time log aggregation from distributed Go microservices via
-        WebSocket
-      </p>
     </div>
   );
 }

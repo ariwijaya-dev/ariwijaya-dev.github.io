@@ -83,7 +83,7 @@ const categories = [
             View My Work
           </a>
           <a
-            href="/resume.pdf"
+            href="/Resume.pdf"
             download
             class="inline-flex items-center gap-2 px-8 py-3 font-mono text-sm bg-[#111111] border border-[#222222] hover:bg-[#1a1a1a] hover:border-[#333333] text-gray-300 rounded-lg transition-colors"
           >
@@ -103,10 +103,13 @@ const categories = [
             [Python]
           </span>
           <span class="px-4 py-2 font-mono text-sm bg-[#111111] border border-[#222222] rounded-lg text-gray-300">
+            [TypeScript]
+          </span>
+          <span class="px-4 py-2 font-mono text-sm bg-[#111111] border border-[#222222] rounded-lg text-gray-300">
             [React]
           </span>
           <span class="px-4 py-2 font-mono text-sm bg-[#111111] border border-[#222222] rounded-lg text-gray-300">
-            [TypeScript]
+            [Node.js]
           </span>
           <span class="px-4 py-2 font-mono text-sm bg-[#111111] border border-[#222222] rounded-lg text-gray-300">
             [Docker]
@@ -116,9 +119,6 @@ const categories = [
           </span>
           <span class="px-4 py-2 font-mono text-sm bg-[#111111] border border-[#222222] rounded-lg text-gray-300">
             [AI/ML]
-          </span>
-          <span class="px-4 py-2 font-mono text-sm bg-[#111111] border border-[#222222] rounded-lg text-gray-300">
-            [PostgreSQL]
           </span>
         </div>
       </div>
@@ -136,18 +136,12 @@ const categories = [
           </h2>
           <div class="space-y-4 text-gray-300">
             <p>
-              I'm a results-driven Software Engineer with a passion for creating robust solutions
-              that make a real impact. From scaling enterprise platforms to building AI-powered tools,
-              I thrive on pushing technological boundaries.
+              I am a Software Engineer dedicated to bridging the gap between high-performance backend systems and intuitive frontend design. 
+              With a deep foundation in Next.js, Go, and Python, I architect robust solutions that scale.
             </p>
             <p>
-              Currently, I'm working at <span class="text-blue-400 font-semibold">Peepl</span> as a Fullstack Engineer,
-              where I led the migration from a monolithic architecture to a Service-Oriented Architecture,
-              enabling the platform to handle <span class="text-blue-400 font-semibold">10,000+ concurrent users</span>.
-            </p>
-            <p>
-              I bring strong analytical and problem-solving skills to every endeavor. As a continuous learner,
-              I stay abreast of emerging trends, ensuring cutting-edge contributions to every project.
+              I specialize in designing Service-Oriented Architectures and integrating AI/ML workflows into production-ready environments. 
+              By leveraging Docker and cloud-native technologies, I focus on delivering seamless, impactful user experiences that solve complex technical challenges.
             </p>
           </div>
 
@@ -209,10 +203,9 @@ const categories = [
           <div class="flex flex-wrap gap-2">
             <span class="px-3 py-1 font-mono text-xs bg-[#0a0a0a] border border-[#222222] rounded text-gray-300">Go</span>
             <span class="px-3 py-1 font-mono text-xs bg-[#0a0a0a] border border-[#222222] rounded text-gray-300">Python</span>
-            <span class="px-3 py-1 font-mono text-xs bg-[#0a0a0a] border border-[#222222] rounded text-gray-300">PHP</span>
+            <span class="px-3 py-1 font-mono text-xs bg-[#0a0a0a] border border-[#222222] rounded text-gray-300">Node.js</span>
             <span class="px-3 py-1 font-mono text-xs bg-[#0a0a0a] border border-[#222222] rounded text-gray-300">Gin</span>
-            <span class="px-3 py-1 font-mono text-xs bg-[#0a0a0a] border border-[#222222] rounded text-gray-300">Django</span>
-            <span class="px-3 py-1 font-mono text-xs bg-[#0a0a0a] border border-[#222222] rounded text-gray-300">Laravel</span>
+            <span class="px-3 py-1 font-mono text-xs bg-[#0a0a0a] border border-[#222222] rounded text-gray-300">FastAPI</span>
           </div>
         </div>
 
@@ -264,7 +257,6 @@ const categories = [
           </div>
           <div class="flex flex-wrap gap-2">
             <span class="px-3 py-1 font-mono text-xs bg-[#0a0a0a] border border-[#222222] rounded text-gray-300">PostgreSQL</span>
-            <span class="px-3 py-1 font-mono text-xs bg-[#0a0a0a] border border-[#222222] rounded text-gray-300">MySQL</span>
             <span class="px-3 py-1 font-mono text-xs bg-[#0a0a0a] border border-[#222222] rounded text-gray-300">MongoDB</span>
             <span class="px-3 py-1 font-mono text-xs bg-[#0a0a0a] border border-[#222222] rounded text-gray-300">Redis</span>
           </div>
@@ -284,7 +276,6 @@ const categories = [
             <span class="px-3 py-1 font-mono text-xs bg-[#0a0a0a] border border-[#222222] rounded text-gray-300">Docker</span>
             <span class="px-3 py-1 font-mono text-xs bg-[#0a0a0a] border border-[#222222] rounded text-gray-300">Kubernetes</span>
             <span class="px-3 py-1 font-mono text-xs bg-[#0a0a0a] border border-[#222222] rounded text-gray-300">CI/CD</span>
-            <span class="px-3 py-1 font-mono text-xs bg-[#0a0a0a] border border-[#222222] rounded text-gray-300">Git</span>
           </div>
         </div>
 
@@ -338,15 +329,15 @@ const categories = [
             </li>
             <li class="flex gap-2">
               <span class="text-blue-400 mt-1">▹</span>
-              <span>Architected microservices with Docker and Kubernetes on GCP infrastructure</span>
+              <span>Architected microservices with Docker and Cloud Run on GCP infrastructure</span>
             </li>
             <li class="flex gap-2">
               <span class="text-blue-400 mt-1">▹</span>
-              <span>Built AI-driven candidate summarization engine using LangChain and OpenAI API, reducing review time by 72%</span>
+              <span>Built AI-driven candidate summarization engine using Mastra and OpenAI API</span>
             </li>
             <li class="flex gap-2">
               <span class="text-blue-400 mt-1">▹</span>
-              <span>Developed AI scoring system achieving 97% evaluation consistency with PostgreSQL and Redis</span>
+              <span>Developed AI scoring system increasing evaluation consistency</span>
             </li>
             <li class="flex gap-2">
               <span class="text-blue-400 mt-1">▹</span>
