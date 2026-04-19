@@ -125,8 +125,140 @@ pre code {
 
 /* Gradient text */
 .gradient-text {
-  background: linear-gradient(135deg, #3b82f6 0%, #8b5cf6 100%);
+  background: linear-gradient(135deg, #3b82f6 0%, #8b5cf6 50%, #ec4899 100%);
+  background-size: 200% 200%;
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
   background-clip: text;
+  animation: gradient-shift 8s ease-in-out infinite;
+}
+
+@keyframes gradient-shift {
+  0%, 100% { background-position: 0% 50%; }
+  50% { background-position: 100% 50%; }
+}
+
+/* Animated grid backdrop used behind the hero */
+.hero-grid {
+  background-image:
+    linear-gradient(rgba(59, 130, 246, 0.08) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(59, 130, 246, 0.08) 1px, transparent 1px);
+  background-size: 48px 48px;
+  mask-image: radial-gradient(ellipse at center, black 30%, transparent 75%);
+  -webkit-mask-image: radial-gradient(ellipse at center, black 30%, transparent 75%);
+  animation: grid-drift 18s linear infinite;
+}
+
+@keyframes grid-drift {
+  from { background-position: 0 0, 0 0; }
+  to { background-position: 48px 48px, 48px 48px; }
+}
+
+/* Radial vignette to darken edges over the 3D scene */
+.hero-vignette {
+  background: radial-gradient(ellipse at center,
+    transparent 0%,
+    rgba(10, 10, 10, 0.4) 55%,
+    rgba(10, 10, 10, 0.95) 100%);
+}
+
+/* Hero title subtle glow */
+.hero-title {
+  filter: drop-shadow(0 0 30px rgba(139, 92, 246, 0.25));
+}
+
+/* 3D perspective stage for tilt cards */
+.tilt-stage {
+  perspective: 1000px;
+}
+
+.tilt {
+  transform-style: preserve-3d;
+  transition: transform 0.3s cubic-bezier(0.22, 1, 0.36, 1), box-shadow 0.3s ease;
+  will-change: transform;
+}
+
+.tilt:hover {
+  box-shadow:
+    0 20px 40px -10px rgba(59, 130, 246, 0.2),
+    0 0 0 1px rgba(139, 92, 246, 0.15);
+}
+
+.tilt > * {
+  transform: translateZ(0);
+}
+
+.tilt .tilt-inner {
+  transform: translateZ(30px);
+  transition: transform 0.3s cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+/* Glow orb that tracks cursor inside tilt cards */
+.tilt-glow {
+  position: absolute;
+  inset: 0;
+  border-radius: inherit;
+  background: radial-gradient(
+    320px circle at var(--mx, 50%) var(--my, 50%),
+    rgba(59, 130, 246, 0.18),
+    transparent 40%
+  );
+  opacity: 0;
+  transition: opacity 0.3s ease;
+  pointer-events: none;
+}
+
+.tilt:hover .tilt-glow {
+  opacity: 1;
+}
+
+/* Scroll reveal */
+.reveal {
+  opacity: 0;
+  transform: translateY(24px);
+  transition: opacity 0.8s cubic-bezier(0.22, 1, 0.36, 1), transform 0.8s cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+.reveal.is-visible {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+.reveal-delay-1 { transition-delay: 0.08s; }
+.reveal-delay-2 { transition-delay: 0.16s; }
+.reveal-delay-3 { transition-delay: 0.24s; }
+.reveal-delay-4 { transition-delay: 0.32s; }
+
+/* Floating badges in hero */
+.float-badge {
+  transition: transform 0.3s cubic-bezier(0.22, 1, 0.36, 1), border-color 0.3s ease, background-color 0.3s ease;
+}
+
+.float-badge:hover {
+  transform: translateY(-4px) rotateX(8deg);
+  border-color: rgba(139, 92, 246, 0.5);
+  background-color: rgba(139, 92, 246, 0.08);
+}
+
+/* Section heading ornament */
+.section-kicker {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.section-kicker::before,
+.section-kicker::after {
+  content: '';
+  display: inline-block;
+  width: 32px;
+  height: 1px;
+  background: linear-gradient(90deg, transparent, rgba(59, 130, 246, 0.6), transparent);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .reveal { opacity: 1; transform: none; transition: none; }
+  .hero-grid { animation: none; }
+  .gradient-text { animation: none; }
+  .tilt { transition: none; }
 }
