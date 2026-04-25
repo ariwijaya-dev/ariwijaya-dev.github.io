@@ -1,34 +1,82 @@
 ---
 import BaseLayout from '@/layouts/BaseLayout.astro';
 import LiveLogStreamer from '@/components/LiveLogStreamer.tsx';
-import HeroScene from '@/components/HeroScene.tsx';
 ---
 
 <BaseLayout>
   <!-- Hero Section -->
-  <section class="relative overflow-hidden min-h-[92vh] flex items-center">
-    <div class="absolute inset-0 bg-gradient-to-br from-blue-500/5 via-transparent to-purple-500/5" />
+  <section class="relative overflow-hidden min-h-[92vh] flex items-center hero-tech">
+    <div class="absolute inset-0 bg-gradient-to-br from-blue-500/5 via-transparent to-purple-500/5"></div>
 
-    <!-- Animated grid backdrop -->
-    <div class="hero-grid absolute inset-0 opacity-40 pointer-events-none"></div>
+    <!-- Animated dot grid -->
+    <div class="hero-grid absolute inset-0 opacity-50 pointer-events-none"></div>
 
-    <!-- 3D Scene -->
-    <div class="absolute inset-0 z-0 pointer-events-none">
-      <HeroScene client:only="react" />
+    <!-- Blueprint circuit pattern -->
+    <svg class="absolute inset-0 w-full h-full opacity-[0.15] pointer-events-none" aria-hidden="true">
+      <defs>
+        <pattern id="circuit-pattern" x="0" y="0" width="120" height="120" patternUnits="userSpaceOnUse">
+          <path d="M0 60 L60 60 L60 0 M60 60 L120 60 M60 60 L60 120" stroke="#3b82f6" stroke-width="1" fill="none" />
+          <circle cx="60" cy="60" r="2.5" fill="#8b5cf6" />
+          <circle cx="0" cy="60" r="1.5" fill="#3b82f6" />
+          <circle cx="120" cy="60" r="1.5" fill="#3b82f6" />
+          <circle cx="60" cy="0" r="1.5" fill="#3b82f6" />
+          <circle cx="60" cy="120" r="1.5" fill="#3b82f6" />
+        </pattern>
+      </defs>
+      <rect width="100%" height="100%" fill="url(#circuit-pattern)" />
+    </svg>
+
+    <!-- Glow orbs -->
+    <div class="absolute -top-32 -left-32 w-[28rem] h-[28rem] rounded-full bg-blue-500/15 blur-3xl pointer-events-none animate-pulse-slow"></div>
+    <div class="absolute -bottom-32 -right-32 w-[28rem] h-[28rem] rounded-full bg-purple-500/15 blur-3xl pointer-events-none animate-pulse-slow animate-pulse-delay"></div>
+
+    <!-- Scan lines -->
+    <div class="absolute inset-0 hero-scanlines pointer-events-none"></div>
+
+    <!-- Floating code snippets (decorative, hidden on small) -->
+    <div class="hidden lg:block absolute top-28 left-6 xl:left-16 z-[2] hero-float hero-float-1">
+      <div class="tech-snippet">
+        <span class="cs-key">const</span> <span class="cs-var">role</span> <span class="cs-op">=</span> <span class="cs-str">'engineer'</span>
+      </div>
+    </div>
+    <div class="hidden lg:block absolute top-44 right-6 xl:right-16 z-[2] hero-float hero-float-2">
+      <div class="tech-snippet">
+        <span class="cs-comment">// shipping &gt; talking</span>
+      </div>
+    </div>
+    <div class="hidden lg:block absolute bottom-32 left-12 xl:left-24 z-[2] hero-float hero-float-3">
+      <div class="tech-snippet">
+        <span class="cs-key">function</span> <span class="cs-fn">build</span>() <span class="cs-brace">{'{ ... }'}</span>
+      </div>
+    </div>
+    <div class="hidden lg:block absolute bottom-44 right-12 xl:right-24 z-[2] hero-float hero-float-4">
+      <div class="tech-snippet">
+        <span class="cs-key">await</span> <span class="cs-var">deploy</span>(<span class="cs-str">'prod'</span>)
+      </div>
     </div>
 
-    <!-- Radial vignette to keep text legible over 3D scene -->
-    <div class="absolute inset-0 z-[1] pointer-events-none hero-vignette"></div>
+    <!-- Vignette to keep text legible -->
+    <div class="absolute inset-0 z-[3] pointer-events-none hero-vignette"></div>
 
     <div class="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-20 lg:py-24 w-full">
       <div class="text-center reveal">
+        <!-- Status pill -->
+        <div class="inline-flex items-center gap-2 px-3 py-1 mb-6 font-mono text-xs bg-[#0a0a0a]/70 backdrop-blur-sm border border-green-500/30 rounded-full">
+          <span class="status-dot"></span>
+          <span class="text-green-400">available_for_work</span>
+        </div>
+
         <p class="font-mono text-sm text-blue-400 mb-4 tracking-widest uppercase">// Hello, I'm</p>
-        <h1 class="text-4xl sm:text-5xl lg:text-7xl font-bold mb-4 tracking-tight hero-title">
+        <h1 class="text-4xl sm:text-5xl lg:text-7xl font-bold mb-6 tracking-tight hero-title">
           <span class="gradient-text">I Made Pande Ari Wijaya</span>
         </h1>
-        <p class="text-2xl sm:text-3xl text-gray-200 mb-6">
-          Software Engineer <span class="text-blue-400">&</span> Fullstack Developer
-        </p>
+
+        <!-- Typed role line -->
+        <div class="text-xl sm:text-2xl lg:text-3xl text-gray-200 mb-6 font-mono flex items-center justify-center gap-2 flex-wrap">
+          <span class="text-blue-400">&gt;</span>
+          <span id="typed-role" class="text-gray-100"></span><span class="cursor-blink">▍</span>
+        </div>
+
         <p class="text-lg sm:text-xl text-gray-400 max-w-3xl mx-auto mb-8">
           Based in Jakarta, Indonesia. I build scalable systems, modern web applications,
           and AI-powered solutions that solve real problems.
@@ -45,7 +93,7 @@ import HeroScene from '@/components/HeroScene.tsx';
             Get In Touch
           </a>
           <a
-            href="/Resume.pdf"
+            href="/resume.pdf"
             download
             class="inline-flex items-center gap-2 px-8 py-3 font-mono text-sm bg-[#111111] border border-[#222222] hover:bg-[#1a1a1a] hover:border-[#333333] text-gray-300 rounded-lg transition-colors"
           >
@@ -443,6 +491,43 @@ import HeroScene from '@/components/HeroScene.tsx';
           rect = null;
         });
       });
+    }
+
+    // Cycling typewriter for hero role line
+    const typedEl = document.getElementById('typed-role');
+    if (typedEl && !isReduced) {
+      const roles = [
+        'Software Engineer',
+        'Fullstack Developer',
+        'AI Engineer',
+        'Cloud Architect',
+        'Problem Solver',
+      ];
+      let ri = 0, ci = 0, deleting = false;
+
+      const tick = () => {
+        const word = roles[ri];
+        if (!deleting) {
+          typedEl.textContent = word.slice(0, ++ci);
+          if (ci === word.length) {
+            deleting = true;
+            return setTimeout(tick, 1600);
+          }
+          return setTimeout(tick, 55 + Math.random() * 40);
+        } else {
+          typedEl.textContent = word.slice(0, --ci);
+          if (ci === 0) {
+            deleting = false;
+            ri = (ri + 1) % roles.length;
+            return setTimeout(tick, 350);
+          }
+          return setTimeout(tick, 30);
+        }
+      };
+      typedEl.textContent = '';
+      setTimeout(tick, 600);
+    } else if (typedEl) {
+      typedEl.textContent = 'Software Engineer';
     }
   </script>
 

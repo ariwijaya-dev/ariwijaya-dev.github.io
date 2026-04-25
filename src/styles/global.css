@@ -256,9 +256,209 @@ pre code {
   background: linear-gradient(90deg, transparent, rgba(59, 130, 246, 0.6), transparent);
 }
 
+/* === Tech-theme hero === */
+
+/* Subtle horizontal scan lines for CRT/terminal vibe */
+.hero-scanlines {
+  background: repeating-linear-gradient(
+    180deg,
+    transparent 0,
+    transparent 3px,
+    rgba(59, 130, 246, 0.025) 3px,
+    rgba(59, 130, 246, 0.025) 4px
+  );
+  mix-blend-mode: screen;
+}
+
+/* Slow pulse for blurred glow orbs */
+@keyframes pulse-slow {
+  0%, 100% { opacity: 0.6; transform: scale(1); }
+  50% { opacity: 1; transform: scale(1.06); }
+}
+.animate-pulse-slow {
+  animation: pulse-slow 9s ease-in-out infinite;
+}
+.animate-pulse-delay {
+  animation-delay: -4.5s;
+}
+
+/* Status pill dot with pulsing ring */
+.status-dot {
+  width: 8px;
+  height: 8px;
+  border-radius: 9999px;
+  background: #10b981;
+  position: relative;
+  box-shadow: 0 0 8px rgba(16, 185, 129, 0.6);
+}
+.status-dot::after {
+  content: '';
+  position: absolute;
+  inset: -4px;
+  border-radius: 9999px;
+  background: #10b981;
+  opacity: 0.6;
+  animation: status-ping 2s ease-out infinite;
+}
+@keyframes status-ping {
+  0% { transform: scale(0.7); opacity: 0.6; }
+  100% { transform: scale(2.2); opacity: 0; }
+}
+
+/* Blinking caret used for typed role */
+.cursor-blink {
+  display: inline-block;
+  color: #3b82f6;
+  margin-left: 2px;
+  animation: cursor-blink 1s steps(2, jump-none) infinite;
+}
+@keyframes cursor-blink {
+  50% { opacity: 0; }
+}
+
+/* Floating decorative code-snippet cards */
+.tech-snippet {
+  font-family: var(--font-mono);
+  font-size: 0.78rem;
+  padding: 0.5rem 0.85rem;
+  background: rgba(17, 17, 17, 0.55);
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+  border: 1px solid rgba(59, 130, 246, 0.2);
+  border-radius: 0.55rem;
+  color: #d1d5db;
+  white-space: nowrap;
+  box-shadow: 0 8px 24px -8px rgba(0, 0, 0, 0.5),
+              inset 0 1px 0 rgba(255, 255, 255, 0.04);
+}
+.cs-key { color: #c084fc; }
+.cs-var { color: #f472b6; }
+.cs-op { color: #94a3b8; }
+.cs-str { color: #6ee7b7; }
+.cs-fn { color: #fbbf24; }
+.cs-brace { color: #94a3b8; }
+.cs-comment { color: #64748b; font-style: italic; }
+
+.hero-float {
+  animation: hero-float 7s ease-in-out infinite;
+  will-change: transform;
+}
+.hero-float-1 { animation-delay: 0s; }
+.hero-float-2 { animation-delay: -2s; animation-duration: 9s; }
+.hero-float-3 { animation-delay: -4s; animation-duration: 8s; }
+.hero-float-4 { animation-delay: -1.5s; animation-duration: 10s; }
+@keyframes hero-float {
+  0%, 100% { transform: translateY(0) rotate(-1deg); }
+  50% { transform: translateY(-14px) rotate(1deg); }
+}
+
+/* === Boot sequence intro overlay === */
+#boot-intro {
+  position: fixed;
+  inset: 0;
+  z-index: 100;
+  background: #050505;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  transition: opacity 0.5s ease, transform 0.5s ease;
+}
+#boot-intro::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background:
+    radial-gradient(ellipse at center, rgba(59, 130, 246, 0.08), transparent 60%),
+    repeating-linear-gradient(180deg, transparent 0, transparent 3px, rgba(59, 130, 246, 0.04) 3px, rgba(59, 130, 246, 0.04) 4px);
+  pointer-events: none;
+}
+#boot-intro.boot-leave {
+  opacity: 0;
+  transform: scale(1.02);
+  pointer-events: none;
+}
+
+#boot-intro .boot-window {
+  position: relative;
+  width: min(540px, 90vw);
+  background: #0d0d0d;
+  border: 1px solid #222;
+  border-radius: 0.6rem;
+  overflow: hidden;
+  font-family: var(--font-mono);
+  box-shadow:
+    0 30px 80px -20px rgba(59, 130, 246, 0.35),
+    0 0 0 1px rgba(139, 92, 246, 0.12),
+    inset 0 1px 0 rgba(255, 255, 255, 0.04);
+  animation: boot-window-in 0.45s cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+@keyframes boot-window-in {
+  from { opacity: 0; transform: translateY(20px) scale(0.96); }
+  to { opacity: 1; transform: translateY(0) scale(1); }
+}
+
+#boot-intro .boot-titlebar {
+  display: flex;
+  align-items: center;
+  gap: 0.45rem;
+  padding: 0.6rem 0.8rem;
+  background: #0a0a0a;
+  border-bottom: 1px solid #1f1f1f;
+}
+.boot-dot { width: 12px; height: 12px; border-radius: 9999px; }
+.boot-dot-r { background: #ef4444; }
+.boot-dot-y { background: #f59e0b; }
+.boot-dot-g { background: #10b981; }
+#boot-intro .boot-title {
+  margin-left: 0.6rem;
+  font-size: 0.75rem;
+  color: #9ca3af;
+  letter-spacing: 0.02em;
+}
+
+#boot-intro .boot-output {
+  margin: 0;
+  padding: 1.1rem 1.1rem 0.4rem;
+  font-size: 0.82rem;
+  line-height: 1.65;
+  color: #d1d5db;
+  white-space: pre;
+  min-height: 10rem;
+}
+#boot-intro .boot-output::after {
+  content: '▍';
+  color: #3b82f6;
+  margin-left: 1px;
+  animation: cursor-blink 1s steps(2, jump-none) infinite;
+}
+#boot-intro .boot-skip {
+  padding: 0.4rem 1.1rem 0.85rem;
+  font-size: 0.7rem;
+  color: #4b5563;
+  text-align: right;
+  letter-spacing: 0.04em;
+}
+
+/* Page entrance fade after boot leaves */
+@keyframes page-enter {
+  from { opacity: 0; transform: translateY(8px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+body > .min-h-screen {
+  animation: page-enter 0.6s cubic-bezier(0.22, 1, 0.36, 1) both;
+}
+
 @media (prefers-reduced-motion: reduce) {
   .reveal { opacity: 1; transform: none; transition: none; }
-  .hero-grid { animation: none; }
-  .gradient-text { animation: none; }
-  .tilt { transition: none; }
+  .hero-grid,
+  .gradient-text,
+  .tilt,
+  .animate-pulse-slow,
+  .hero-float,
+  .cursor-blink,
+  .status-dot::after,
+  body > .min-h-screen { animation: none; transition: none; }
+  #boot-intro { display: none; }
 }

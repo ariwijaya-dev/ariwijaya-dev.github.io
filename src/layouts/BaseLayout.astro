@@ -32,6 +32,75 @@ const canonicalURL = new URL(Astro.url.pathname, Astro.site);
     <link rel="apple-touch-icon" href="/web-logo.png" />
   </head>
   <body class="bg-[#0a0a0a] text-gray-100 antialiased">
+    <!-- Boot sequence intro (first session visit only) -->
+    <div id="boot-intro" aria-hidden="true">
+      <div class="boot-window">
+        <div class="boot-titlebar">
+          <span class="boot-dot boot-dot-r"></span>
+          <span class="boot-dot boot-dot-y"></span>
+          <span class="boot-dot boot-dot-g"></span>
+          <span class="boot-title">ari@portfolio: ~</span>
+        </div>
+        <pre class="boot-output"><code id="boot-output"></code></pre>
+        <div class="boot-skip">click anywhere to skip</div>
+      </div>
+    </div>
+
+    <script is:inline>
+      (function () {
+        const intro = document.getElementById('boot-intro');
+        if (!intro) return;
+
+        const reduced =
+          window.matchMedia &&
+          window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+        const booted = sessionStorage.getItem('booted') === '1';
+
+        if (reduced || booted) {
+          intro.remove();
+          return;
+        }
+
+        const out = document.getElementById('boot-output');
+        const lines = [
+          '$ ./init.sh\n',
+          '[ OK ] mounting /home/ari\n',
+          '[ OK ] loading modules: astro, react, tailwind\n',
+          '[ OK ] initializing portfolio.runtime\n',
+          '[ OK ] starting hero.service\n',
+          '[ OK ] welcome.\n',
+        ];
+        let li = 0,
+          ci = 0;
+
+        document.documentElement.style.overflow = 'hidden';
+
+        const finish = () => {
+          sessionStorage.setItem('booted', '1');
+          intro.classList.add('boot-leave');
+          setTimeout(() => {
+            document.documentElement.style.overflow = '';
+            intro.remove();
+          }, 550);
+        };
+
+        const step = () => {
+          if (li >= lines.length) return setTimeout(finish, 320);
+          const line = lines[li];
+          if (ci < line.length) {
+            out.textContent += line[ci++];
+            return setTimeout(step, 8 + Math.random() * 16);
+          }
+          ci = 0;
+          li++;
+          return setTimeout(step, 120 + Math.random() * 100);
+        };
+
+        intro.addEventListener('click', finish, { once: true });
+        requestAnimationFrame(step);
+      })();
+    </script>
+
     <div class="min-h-screen flex flex-col">
       <header class="border-b border-gray-800 backdrop-blur-sm bg-[#0a0a0a]/80 sticky top-0 z-50">
         <nav class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
